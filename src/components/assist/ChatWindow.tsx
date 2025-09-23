@@ -72,7 +72,7 @@ export function ChatWindow() {
         </div>
         <h2 className="font-headline text-2xl text-glow">AI Assistant</h2>
       </div>
-      <div className="flex-grow p-4">
+      <div className="flex-grow p-4 overflow-hidden">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
           <div className="space-y-6 pr-4">
             {messages.map((message) => (
