@@ -9,7 +9,7 @@ export default function AssistPage() {
         title="AI Assistant"
         subtitle="Your direct line to our AI. Ask anything about FrontalMinds, our technology, or the future of cognitive enhancement."
       />
-      <AnimatedSection className="flex-grow flex flex-col">
+      <AnimatedSection className="flex-grow flex flex-col pb-8">
         <ChatWindow />
       </AnimatedSection>
     </div>
