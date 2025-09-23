@@ -35,18 +35,20 @@ export default function ServicesPage() {
         subtitle="Explore our cutting-edge solutions designed to unlock the next stage of human evolution. Each service is a gateway to unparalleled cognitive abilities."
       />
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {services.map((service, index) => (
           <AnimatedSection key={service.title} delay={index * 0.1}>
             <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 group transition-all duration-300 hover:border-primary hover:-translate-y-2 hover:box-glow">
-              <CardHeader className="flex flex-row items-center gap-4">
+              <CardHeader className="flex flex-row items-start gap-4 space-y-0 pb-3">
                 <div className="bg-primary/10 p-3 rounded-lg">
-                  <service.icon className="h-8 w-8 text-white" />
+                  <service.icon className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="font-headline text-2xl text-primary-foreground">{service.title}</CardTitle>
+                <div className="flex-1">
+                  <CardTitle className="font-headline text-lg text-primary-foreground leading-tight">{service.title}</CardTitle>
+                </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-lg text-muted-foreground">
+                <CardDescription className="text-sm text-muted-foreground">
                   {service.description}
                 </CardDescription>
               </CardContent>
