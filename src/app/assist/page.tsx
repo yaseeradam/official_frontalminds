@@ -4,12 +4,12 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
 export default function AssistPage() {
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <PageHeader
         title="AI Assistant"
         subtitle="Your direct line to our AI. Ask anything about FrontalMinds, our technology, or the future of cognitive enhancement."
       />
-      <AnimatedSection>
+      <AnimatedSection className="flex-grow flex flex-col">
         <ChatWindow />
       </AnimatedSection>
     </div>

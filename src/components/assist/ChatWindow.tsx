@@ -65,7 +65,7 @@ export function ChatWindow() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto h-[600px] flex flex-col bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg box-glow">
+    <div className="max-w-2xl mx-auto flex-grow flex flex-col bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg box-glow">
       <div className="p-4 border-b border-primary/20 flex items-center gap-4">
         <div className="p-2 bg-primary/10 rounded-full box-glow">
             <BrainCircuit className="h-6 w-6 text-primary" />
