@@ -23,15 +23,8 @@ const HELP_MESSAGE = `Available commands:
   clear/cls - clear the terminal screen
   exit      - close the terminal`;
 
-const WELCOME_MESSAGE = `
-███████╗██████╗ ██╗  ██╗███╗   ██╗████████╗ █████╗ ██╗     ███╗   ███╗██╗███╗   ██╗██████╗ ███████╗
-██╔════╝██╔══██╗██║  ██║████╗  ██║╚══██╔══╝██╔══██╗██║     ████╗ ████║██║████╗  ██║██╔══██╗██╔════╝
-█████╗  ██████╔╝███████║██╔██╗ ██║   ██║   ███████║██║     ██╔████╔██║██║██╔██╗ ██║██║  ██║███████╗
-██╔══╝  ██╔══██╗██╔══██║██║╚██╗██║   ██║   ██╔══██║██║     ██║╚██╔╝██║██║██║╚██╗██║██║  ██║╚════██║
-███████╗██║  ██║██║  ██║██║ ╚████║   ██║   ██║  ██║███████╗██║ ╚═╝ ██║██║██║ ╚████║██████╔╝███████║
-╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
-Welcome to the FrontalMinds Secure Terminal.
-Authorization required. Type 'help' for a list of commands.`;
+const WELCOME_MESSAGE = `Welcome to the FrontalMinds Secure Terminal.
+Type 'help' for a list of commands.`;
 
 export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [lines, setLines] = useState<Line[]>([]);
@@ -50,12 +43,10 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const dragControls = useDragControls();
 
   useEffect(() => {
-    if (lines.length === 0) {
-      WELCOME_MESSAGE.split('\n').forEach(line => 
-        setLines(prev => [...prev, { type: 'system', text: line }])
-      );
+    if (isOpen && lines.length === 0) {
+      setLines([{ type: 'system', text: WELCOME_MESSAGE }]);
     }
-  }, [lines.length]);
+  }, [isOpen, lines.length]);
 
   useEffect(() => {
     if (isOpen) {
@@ -63,10 +54,16 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
         inputRef.current?.focus();
       }
       // Center on open
-      setPosition({ x: 0, y: 0 });
-      setIsMaximized(false);
+      if (position.x === 0 && position.y === 0) {
+        const terminal = terminalRef.current;
+        if (terminal) {
+            const { innerWidth, innerHeight } = window;
+            const { width, height } = terminal.getBoundingClientRect();
+            setPosition({ x: (innerWidth - width) / 2, y: (innerHeight - height) / 2 });
+        }
+      }
     }
-  }, [isOpen, isMobile]);
+  }, [isOpen, isMobile, position.x, position.y]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
@@ -94,10 +91,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
         return;
       case 'clear':
       case 'cls':
-        setLines([]);
-        WELCOME_MESSAGE.split('\n').forEach(line => 
-          setLines(prev => [...prev, { type: 'system', text: line }])
-        );
+        setLines([{ type: 'system', text: WELCOME_MESSAGE }]);
         return;
       case 'exit':
         onClose();
@@ -206,14 +200,14 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
       </div>
        {!isMaximized && (
         <>
-            <motion.div className="resize-handle resize-handle-tr" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width + info.delta.x, height: d.height - info.delta.y })); setPosition(p => ({ ...p, y: p.y + info.delta.y })) }} />
-            <motion.div className="resize-handle resize-handle-tl" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width - info.delta.x, height: d.height - info.delta.y })); setPosition(p => ({ x: p.x + info.delta.x, y: p.y + info.delta.y })) }} />
-            <motion.div className="resize-handle resize-handle-br" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width + info.delta.x, height: d.height + info.delta.y })); }} />
-            <motion.div className="resize-handle resize-handle-bl" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width - info.delta.x, height: d.height + info.delta.y })); setPosition(p => ({ ...p, x: p.x + info.delta.x })) }} />
-            <motion.div className="resize-handle resize-handle-t" drag="y" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, height: d.height - info.delta.y })); setPosition(p => ({ ...p, y: p.y + info.delta.y })) }} />
-            <motion.div className="resize-handle resize-handle-b" drag="y" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, height: d.height + info.delta.y })); }} />
-            <motion.div className="resize-handle resize-handle-r" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, width: d.width + info.delta.x })); }} />
-            <motion.div className="resize-handle resize-handle-l" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, width: d.width - info.delta.x })); setPosition(p => ({ ...p, x: p.x + info.delta.x })) }} />
+            <motion.div className="resize-handle resize-handle-tr" onPan={(e, info) => { setDimensions(d => ({ width: d.width + info.delta.x, height: d.height - info.delta.y })); setPosition(p => ({ ...p, y: p.y + info.delta.y })) }} />
+            <motion.div className="resize-handle resize-handle-tl" onPan={(e, info) => { setDimensions(d => ({ width: d.width - info.delta.x, height: d.height - info.delta.y })); setPosition(p => ({ x: p.x + info.delta.x, y: p.y + info.delta.y })) }} />
+            <motion.div className="resize-handle resize-handle-br" onPan={(e, info) => { setDimensions(d => ({ width: d.width + info.delta.x, height: d.height + info.delta.y })); }} />
+            <motion.div className="resize-handle resize-handle-bl" onPan={(e, info) => { setDimensions(d => ({ width: d.width - info.delta.x, height: d.height + info.delta.y })); setPosition(p => ({ ...p, x: p.x + info.delta.x })) }} />
+            <motion.div className="resize-handle resize-handle-t" onPan={(e, info) => { setDimensions(d => ({ ...d, height: d.height - info.delta.y })); setPosition(p => ({ ...p, y: p.y + info.delta.y })) }} />
+            <motion.div className="resize-handle resize-handle-b" onPan={(e, info) => { setDimensions(d => ({ ...d, height: d.height + info.delta.y })); }} />
+            <motion.div className="resize-handle resize-handle-r" onPan={(e, info) => { setDimensions(d => ({ ...d, width: d.width + info.delta.x })); }} />
+            <motion.div className="resize-handle resize-handle-l" onPan={(e, info) => { setDimensions(d => ({ ...d, width: d.width - info.delta.x })); setPosition(p => ({ ...p, x: p.x + info.delta.x })) }} />
         </>
       )}
     </div>
@@ -234,17 +228,22 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                 scale: 1, 
                 width: isMaximized ? '90vw' : dimensions.width, 
                 height: isMaximized ? '80vh' : dimensions.height,
-                x: isMaximized ? 0 : position.x,
-                y: isMaximized ? 0 : position.y,
+                x: position.x,
+                y: position.y,
             }}
             exit={{ opacity: 0, scale: 0.9 }}
             dragMomentum={false}
             transition={{ type: 'spring', stiffness: 500, damping: 40, mass: 0.8 }}
-            className="fixed top-1/2 left-1/2 z-50 flex flex-col overflow-hidden max-w-[95vw] max-h-[90vh] min-w-[400px] min-h-[300px] bg-background rounded-lg border border-primary/30 shadow-2xl shadow-primary/20"
+            className="fixed z-50 flex flex-col overflow-hidden max-w-[95vw] max-h-[90vh] min-w-[400px] min-h-[300px] bg-background rounded-lg border border-primary/30 shadow-2xl shadow-primary/20"
             style={{
-                ...(isMaximized && { top: '5vh', left: '5vw', x:0, y:0 }),
+                ...(isMaximized && { top: '5vh', left: '5vw', x:0, y:0, width: '90vw', height: '90vh' }),
+                ...(!isMaximized && { top: `calc(50% + ${position.y}px)`, left: `calc(50% + ${position.x}px)`})
             }}
-            onDragEnd={(_, info) => setPosition({ x: info.offset.x, y: info.offset.y })}
+            onDragEnd={(_, info) => {
+              if (!isMaximized) {
+                setPosition({ x: position.x + info.offset.x, y: position.y + info.offset.y })
+              }
+            }}
         >
           {content}
         </motion.div>
