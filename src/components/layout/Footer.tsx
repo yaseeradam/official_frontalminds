@@ -1,7 +1,6 @@
 import { Github, Twitter, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/layout/Logo";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,7 +10,6 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
-            <Logo className="h-6 w-6 text-primary" />
             <p className="font-headline text-xl font-bold">FrontalMinds</p>
           </div>
           <p className="text-sm text-muted-foreground">

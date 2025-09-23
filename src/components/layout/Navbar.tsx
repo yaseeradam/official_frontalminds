@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Terminal } from "@/components/terminal/Terminal";
-import { Logo } from "@/components/layout/Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -46,7 +45,6 @@ export function Navbar() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold text-glow">
-              <Logo className="h-7 w-7 text-primary" />
               FrontalMinds
             </Link>
 
@@ -86,7 +84,6 @@ export function Navbar() {
                     <div className="flex flex-col h-full">
                        <div className="flex justify-between items-center mb-8">
                         <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold text-glow">
-                          <Logo className="h-7 w-7 text-primary" />
                           FrontalMinds
                         </Link>
                         <SheetTrigger asChild>
