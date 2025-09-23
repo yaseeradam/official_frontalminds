@@ -20,12 +20,12 @@ export function ChatWindow() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTo({
-        top: scrollAreaRef.current.scrollHeight,
+    if (viewportRef.current) {
+      viewportRef.current.scrollTo({
+        top: viewportRef.current.scrollHeight,
         behavior: 'smooth',
       });
     }
@@ -74,7 +74,7 @@ export function ChatWindow() {
         <h2 className="font-headline text-2xl text-glow">AI Assistant</h2>
       </div>
       <div className="flex-grow p-4 overflow-hidden">
-        <ScrollArea className="h-full" ref={scrollAreaRef}>
+        <ScrollArea className="h-full" viewportRef={viewportRef}>
           <div className="space-y-6 pr-4">
             {messages.map((message) => (
               <div
@@ -146,4 +146,3 @@ export function ChatWindow() {
     </div>
   );
 }
-
