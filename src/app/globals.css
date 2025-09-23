@@ -92,28 +92,40 @@
 
 /* Blinking cursor for terminal */
 .blinking-cursor {
-  width: 10px;
-  height: 1.2rem;
+  width: 8px;
+  height: 1.1rem;
   display: inline-block;
-  background-color: hsl(var(--primary));
+  background-color: #4ade80; /* green-400 */
   animation: blink 1s step-end infinite;
+  box-shadow: 0 0 5px #4ade80;
 }
 
 @keyframes blink {
   from, to {
     background-color: transparent;
+    box-shadow: none;
   }
   50% {
-    background-color: hsl(var(--primary));
+    background-color: #4ade80; /* green-400 */
+    box-shadow: 0 0 5px #4ade80;
   }
 }
+
 
 /* Hide scrollbar for terminal output */
 .terminal-output::-webkit-scrollbar {
-  display: none;
+    width: 8px;
+}
+.terminal-output::-webkit-scrollbar-track {
+    background: #000000;
+}
+.terminal-output::-webkit-scrollbar-thumb {
+    background-color: #22c55e; /* green-500 */
+    border-radius: 4px;
+    border: 2px solid #000000;
 }
 
 .terminal-output {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: #22c55e #000000;
 }

@@ -23,11 +23,18 @@ const HELP_MESSAGE = `Available commands:
   clear/cls - clear the terminal screen
   exit      - close the terminal`;
 
+const WELCOME_MESSAGE = `
+███████╗██████╗ ██╗  ██╗███╗   ██╗████████╗ █████╗ ██╗     ███╗   ███╗██╗███╗   ██╗██████╗ ███████╗
+██╔════╝██╔══██╗██║  ██║████╗  ██║╚══██╔══╝██╔══██╗██║     ████╗ ████║██║████╗  ██║██╔══██╗██╔════╝
+█████╗  ██████╔╝███████║██╔██╗ ██║   ██║   ███████║██║     ██╔████╔██║██║██╔██╗ ██║██║  ██║███████╗
+██╔══╝  ██╔══██╗██╔══██║██║╚██╗██║   ██║   ██╔══██║██║     ██║╚██╔╝██║██║██║╚██╗██║██║  ██║╚════██║
+███████╗██║  ██║██║  ██║██║ ╚████║   ██║   ██║  ██║███████╗██║ ╚═╝ ██║██║██║ ╚████║██████╔╝███████║
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+Welcome to the FrontalMinds Secure Terminal.
+Authorization required. Type 'help' for a list of commands.`;
+
 export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [lines, setLines] = useState<Line[]>([
-    { type: 'system', text: 'FrontalMinds Terminal v1.0' },
-    { type: 'system', text: 'Type "help" to see available commands.' },
-  ]);
+  const [lines, setLines] = useState<Line[]>([]);
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -37,6 +44,15 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Set initial welcome message only once
+    if (lines.length === 0) {
+      WELCOME_MESSAGE.split('\n').forEach(line => 
+        setLines(prev => [...prev, { type: 'system', text: line }])
+      );
+    }
+  }, [lines.length]);
 
   useEffect(() => {
     if (isOpen && !isMobile) {
@@ -69,9 +85,11 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const handleCommand = async (command: string) => {
     const trimmed = command.trim();
     if (trimmed) {
-      addLine({ type: 'input', text: `> ${trimmed}` });
+      addLine({ type: 'input', text: `root@frontalminds:~# ${trimmed}` });
       setHistory(prev => [trimmed, ...prev]);
       setHistoryIndex(-1);
+    } else {
+      addLine({ type: 'input', text: `root@frontalminds:~#` });
     }
 
     setInput('');
@@ -85,6 +103,9 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
       case 'clear':
       case 'cls':
         setLines([]);
+        WELCOME_MESSAGE.split('\n').forEach(line => 
+          setLines(prev => [...prev, { type: 'system', text: line }])
+        );
         return;
       case 'exit':
         onClose();
@@ -99,8 +120,8 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
         setTimeout(onClose, 500);
       } else if (result.easterEgg) {
         addLine({ type: 'easter-egg', text: `*** ${result.easterEgg} ***` });
-      } else {
-        addLine({ type: 'error', text: `Command not found: ${trimmed}` });
+      } else if(trimmed) {
+        addLine({ type: 'error', text: `bash: command not found: ${trimmed}` });
       }
     } catch (error) {
       addLine({ type: 'error', text: 'An unexpected error occurred.' });
@@ -129,7 +150,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
       }
     } else if (e.key === 'c' && e.ctrlKey) {
         setInput('');
-        addLine({ type: 'input', text: `> ${input}^C` });
+        addLine({ type: 'input', text: `root@frontalminds:~# ${input}^C` });
     }
   };
   
@@ -141,38 +162,38 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     </div>
   ) : (
     <div className="flex flex-col h-full font-code" onClick={() => inputRef.current?.focus()}>
-      <div className="flex-shrink-0 p-2 flex items-center justify-between bg-black/30">
-        <span className="text-sm text-primary">root@frontalminds:~</span>
+      <div className="flex-shrink-0 p-2 flex items-center justify-between bg-black/50">
+        <span className="text-sm text-green-400">root@frontalminds: ~</span>
         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onClose}>
           <X className="h-4 w-4" />
         </Button>
       </div>
       <div ref={scrollRef} className="flex-grow p-2 overflow-y-auto terminal-output">
         {lines.map((line, index) => (
-          <p key={index} className={cn('whitespace-pre-wrap break-words', {
-            'text-primary': line.type === 'input',
+          <p key={index} className={cn('whitespace-pre-wrap break-words text-sm', {
+            'text-green-400': line.type === 'input',
             'text-gray-300': line.type === 'output',
             'text-red-500': line.type === 'error',
-            'text-cyan-400': line.type === 'system',
+            'text-green-500 font-bold': line.type === 'system',
             'text-yellow-400 text-glow': line.type === 'easter-egg',
           })}>
             {line.text}
           </p>
         ))}
-      </div>
-      <div className="flex-shrink-0 p-2 flex items-center">
-        <span className="text-primary">&gt;&nbsp;</span>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="flex-grow bg-transparent text-primary outline-none"
-          spellCheck="false"
-          autoComplete="off"
-        />
-        <span className="blinking-cursor"></span>
+         <div className="flex items-center">
+          <span className="text-green-400">root@frontalminds:~#&nbsp;</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="flex-grow bg-transparent text-green-400 outline-none"
+            spellCheck="false"
+            autoComplete="off"
+          />
+          <span className="blinking-cursor"></span>
+        </div>
       </div>
     </div>
   );
@@ -186,7 +207,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: "-20%" }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90vw] h-[70vh] max-w-2xl max-h-[450px] bg-black/80 backdrop-blur-sm rounded-lg border border-primary/20 shadow-2xl box-glow"
+          className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 z-50 w-[90vw] h-[70vh] max-w-4xl max-h-[600px] bg-black/80 backdrop-blur-sm rounded-lg border border-green-500/30 shadow-2xl shadow-green-500/20"
         >
           {content}
         </motion.div>
