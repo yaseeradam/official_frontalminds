@@ -4,63 +4,23 @@ export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 84 74"
+      viewBox="0 0 100 100"
       fill="none"
       className={cn("h-7 w-7", className)}
       {...props}
     >
       <path
-        d="M26.46 29.54v14.92m26.88-14.92v14.92m-26.88 0l-16.13 22.1m42.37-36.4L26.46 1.5M53.34 29.54H26.46m26.88 14.92H26.46"
         stroke="hsl(var(--primary))"
-        strokeWidth="3"
+        strokeWidth="5"
         strokeLinecap="round"
-      ></path>
-      <circle
-        cx="26.46"
-        cy="29.54"
-        r="6.96"
-        fill="hsl(var(--primary))"
-      ></circle>
-      <circle
-        cx="26.46"
-        cy="44.46"
-        r="6.96"
-        fill="hsl(var(--primary))"
-      ></circle>
-      <circle
-        cx="10.33"
-        cy="66.56"
-        r="6.96"
-        transform="rotate(-90 10.33 66.56)"
-        fill="hsl(var(--primary))"
-      ></circle>
-      <circle
-        cx="42.59"
-        cy="66.56"
-        r="6.96"
-        transform="rotate(-90 42.59 66.56)"
-        fill="hsl(var(--primary))"
-      ></circle>
-      <circle
-        cx="53.34"
-        cy="29.54"
-        r="6.96"
-        fill="hsl(var(--primary))"
-      ></circle>
-      <circle
-        cx="53.34"
-        cy="44.46"
-        r="6.96"
-        fill="hsl(var(--primary))"
-      ></circle>
-      <circle
-        cx="73.54"
-        cy="10.46"
-        r="8.96"
-        fill="hsl(var(--accent))"
-        stroke="#22274A"
-        strokeWidth="3"
-      ></circle>
+        d="M25 50 h50 M35 30 l30 40 M35 70 l30 -40"
+      />
+      <circle cx="25" cy="50" r="10" fill="hsl(var(--primary))" />
+      <circle cx="75" cy="50" r="10" fill="hsl(var(--primary))" />
+      <circle cx="35" cy="30" r="10" fill="hsl(var(--primary))" />
+      <circle cx="65" cy="70" r="10" fill="hsl(var(--primary))" />
+      <circle cx="35" cy="70" r="10" fill="hsl(var(--primary))" />
+      <circle cx="65" cy="30" r="10" fill="hsl(var(--accent))" />
     </svg>
   );
 }
