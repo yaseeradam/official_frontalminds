@@ -41,7 +41,7 @@ export default function ServicesPage() {
             <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 group transition-all duration-300 hover:border-primary hover:-translate-y-2 hover:box-glow">
               <CardHeader className="flex flex-row items-center gap-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
-                  <service.icon className="h-8 w-8 text-accent" />
+                  <service.icon className="h-8 w-8 text-white" />
                 </div>
                 <CardTitle className="font-headline text-2xl text-primary-foreground">{service.title}</CardTitle>
               </CardHeader>
