@@ -54,7 +54,7 @@ export function Navbar() {
               {navLinks.map(({ href, label }) => (
                 <Button key={href} variant="ghost" asChild className={cn(
                   "text-lg font-medium",
-                  pathname === href ? "text-primary" : "text-muted-foreground hover:text-primary"
+                  pathname === href ? "text-primary" : "text-muted-foreground hover:text-primary hover:bg-accent/10"
                 )}>
                   <Link href={href}>{label}</Link>
                 </Button>
