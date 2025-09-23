@@ -43,30 +43,33 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const dragControls = useDragControls();
 
   useEffect(() => {
-    if (isOpen && lines.length === 0) {
-      setLines([{ type: 'system', text: WELCOME_MESSAGE }]);
-    }
-  }, [isOpen, lines.length]);
-
-  useEffect(() => {
     if (isOpen) {
+      if (lines.length === 0) {
+        setLines([{ type: 'system', text: WELCOME_MESSAGE }]);
+      }
       if (!isMobile) {
         inputRef.current?.focus();
       }
+      
       // Center on open
-      if (position.x === 0 && position.y === 0) {
-        const terminal = terminalRef.current;
-        if (terminal) {
-            const { innerWidth, innerHeight } = window;
-            const { width, height } = terminal.getBoundingClientRect();
-            setPosition({ x: (innerWidth - width) / 2, y: (innerHeight - height) / 2 });
-        }
+      const terminal = terminalRef.current;
+      if (terminal) {
+          const { innerWidth, innerHeight } = window;
+          const { width, height } = terminal.getBoundingClientRect();
+          setPosition({ x: (innerWidth - width) / 2, y: (innerHeight - height) / 2 });
+      } else {
+        // Fallback for initial render
+        const x = (window.innerWidth - dimensions.width) / 2;
+        const y = (window.innerHeight - dimensions.height) / 2;
+        setPosition({ x, y });
       }
     }
-  }, [isOpen, isMobile, position.x, position.y]);
+  }, [isOpen, isMobile, dimensions.width, dimensions.height, lines.length]);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [lines]);
 
   const addLine = (line: Line) => setLines(prev => [...prev, line]);
@@ -237,7 +240,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
             className="fixed z-50 flex flex-col overflow-hidden max-w-[95vw] max-h-[90vh] min-w-[400px] min-h-[300px] bg-background rounded-lg border border-primary/30 shadow-2xl shadow-primary/20"
             style={{
                 ...(isMaximized && { top: '5vh', left: '5vw', x:0, y:0, width: '90vw', height: '90vh' }),
-                ...(!isMaximized && { top: `calc(50% + ${position.y}px)`, left: `calc(50% + ${position.x}px)`})
+                ...(!isMaximized && { top: '0px', left: '0px'})
             }}
             onDragEnd={(_, info) => {
               if (!isMaximized) {
