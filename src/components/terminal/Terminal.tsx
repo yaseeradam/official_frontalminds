@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Terminal as TerminalIcon } from 'lucide-react';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
+import { X, Terminal as TerminalIcon, Maximize, Minimize2 } from 'lucide-react';
 import { routeCommand } from '@/ai/flows/terminal-command-router';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -38,15 +38,18 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [isMaximized, setIsMaximized] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 896, height: 600 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   
   const router = useRouter();
   const isMobile = useIsMobile();
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const dragControls = useDragControls();
 
   useEffect(() => {
-    // Set initial welcome message only once
     if (lines.length === 0) {
       WELCOME_MESSAGE.split('\n').forEach(line => 
         setLines(prev => [...prev, { type: 'system', text: line }])
@@ -55,30 +58,19 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   }, [lines.length]);
 
   useEffect(() => {
-    if (isOpen && !isMobile) {
-      inputRef.current?.focus();
+    if (isOpen) {
+      if (!isMobile) {
+        inputRef.current?.focus();
+      }
+      // Center on open
+      setPosition({ x: 0, y: 0 });
+      setIsMaximized(false);
     }
   }, [isOpen, isMobile]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
   }, [lines]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (terminalRef.current && !terminalRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
 
   const addLine = (line: Line) => setLines(prev => [...prev, line]);
 
@@ -153,7 +145,9 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
         addLine({ type: 'input', text: `root@frontalminds:~# ${input}^C` });
     }
   };
-  
+
+  const toggleMaximize = () => setIsMaximized(!isMaximized);
+
   const content = isMobile ? (
     <div className="p-6 text-center">
       <TerminalIcon className="mx-auto h-12 w-12 text-primary" />
@@ -162,39 +156,66 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     </div>
   ) : (
     <div className="flex flex-col h-full font-code" onClick={() => inputRef.current?.focus()}>
-      <div className="flex-shrink-0 p-2 flex items-center justify-between bg-black/50">
-        <span className="text-sm text-green-400">root@frontalminds: ~</span>
-        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onClose}>
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
-      <div ref={scrollRef} className="flex-grow p-2 overflow-y-auto terminal-output">
+      <motion.div
+        onPointerDown={(e) => {
+            // prevent drag from text selection
+            if (e.target instanceof HTMLElement && e.target.closest('button')) return;
+            dragControls.start(e, { snapToCursor: false });
+        }}
+        className="flex-shrink-0 p-2 flex items-center justify-between bg-background/80 cursor-grab active:cursor-grabbing"
+      >
+        <div className="flex items-center gap-2">
+            <TerminalIcon className="h-4 w-4 text-primary"/>
+            <span className="text-sm text-primary">root@frontalminds: ~</span>
+        </div>
+        <div className="flex items-center">
+            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={toggleMaximize}>
+                 {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+            </Button>
+            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onClose}>
+                <X className="h-4 w-4" />
+            </Button>
+        </div>
+      </motion.div>
+      <div ref={scrollRef} className="flex-grow p-2 overflow-y-auto terminal-output bg-black/80">
         {lines.map((line, index) => (
           <p key={index} className={cn('whitespace-pre-wrap break-words text-sm', {
-            'text-green-400': line.type === 'input',
-            'text-gray-300': line.type === 'output',
-            'text-red-500': line.type === 'error',
-            'text-green-500 font-bold': line.type === 'system',
+            'text-primary': line.type === 'input',
+            'text-foreground/80': line.type === 'output',
+            'text-destructive': line.type === 'error',
+            'text-primary/90 font-bold': line.type === 'system',
             'text-yellow-400 text-glow': line.type === 'easter-egg',
           })}>
             {line.text}
           </p>
         ))}
          <div className="flex items-center">
-          <span className="text-green-400">root@frontalminds:~#&nbsp;</span>
+          <span className="text-primary">root@frontalminds:~#&nbsp;</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-grow bg-transparent text-green-400 outline-none"
+            className="flex-grow bg-transparent text-primary outline-none"
             spellCheck="false"
             autoComplete="off"
           />
           <span className="blinking-cursor"></span>
         </div>
       </div>
+       {!isMaximized && (
+        <>
+            <motion.div className="resize-handle resize-handle-tr" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width + info.delta.x, height: d.height - info.delta.y })); setPosition(p => ({ ...p, y: p.y + info.delta.y })) }} />
+            <motion.div className="resize-handle resize-handle-tl" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width - info.delta.x, height: d.height - info.delta.y })); setPosition(p => ({ x: p.x + info.delta.x, y: p.y + info.delta.y })) }} />
+            <motion.div className="resize-handle resize-handle-br" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width + info.delta.x, height: d.height + info.delta.y })); }} />
+            <motion.div className="resize-handle resize-handle-bl" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ width: d.width - info.delta.x, height: d.height + info.delta.y })); setPosition(p => ({ ...p, x: p.x + info.delta.x })) }} />
+            <motion.div className="resize-handle resize-handle-t" drag="y" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, height: d.height - info.delta.y })); setPosition(p => ({ ...p, y: p.y + info.delta.y })) }} />
+            <motion.div className="resize-handle resize-handle-b" drag="y" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, height: d.height + info.delta.y })); }} />
+            <motion.div className="resize-handle resize-handle-r" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, width: d.width + info.delta.x })); }} />
+            <motion.div className="resize-handle resize-handle-l" drag="x" dragMomentum={false} onDrag={(_, info) => { setDimensions(d => ({ ...d, width: d.width - info.delta.x })); setPosition(p => ({ ...p, x: p.x + info.delta.x })) }} />
+        </>
+      )}
     </div>
   );
 
@@ -202,12 +223,28 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          ref={terminalRef}
-          initial={{ opacity: 0, scale: 0.9, y: "-20%" }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: "-20%" }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 z-50 w-[90vw] h-[70vh] max-w-4xl max-h-[600px] bg-black/80 backdrop-blur-sm rounded-lg border border-green-500/30 shadow-2xl shadow-green-500/20"
+            ref={terminalRef}
+            dragControls={dragControls}
+            dragListener={false}
+            drag
+            whileDrag={{ cursor: 'grabbing' }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ 
+                opacity: 1, 
+                scale: 1, 
+                width: isMaximized ? '90vw' : dimensions.width, 
+                height: isMaximized ? '80vh' : dimensions.height,
+                x: isMaximized ? 0 : position.x,
+                y: isMaximized ? 0 : position.y,
+            }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            dragMomentum={false}
+            transition={{ type: 'spring', stiffness: 500, damping: 40, mass: 0.8 }}
+            className="fixed top-1/2 left-1/2 z-50 flex flex-col overflow-hidden max-w-[95vw] max-h-[90vh] min-w-[400px] min-h-[300px] bg-background rounded-lg border border-primary/30 shadow-2xl shadow-primary/20"
+            style={{
+                ...(isMaximized && { top: '5vh', left: '5vw', x:0, y:0 }),
+            }}
+            onDragEnd={(_, info) => setPosition({ x: info.offset.x, y: info.offset.y })}
         >
           {content}
         </motion.div>
