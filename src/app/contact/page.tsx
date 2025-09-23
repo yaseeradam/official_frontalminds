@@ -1,25 +1,54 @@
 "use client";
 
+import { useState } from "react";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Send, Mail, User, MessageSquare } from "lucide-react";
+import { Send, Mail, User, MessageSquare, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function ContactPage() {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // This is a dummy handler. In a real app, this would send data to a server.
-    toast({
-      title: "Transmission Sent",
-      description: "Your message has been successfully transmitted to FrontalMinds HQ. We will respond shortly.",
-    });
-    (e.target as HTMLFormElement).reset();
+    setIsLoading(true);
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    try {
+      await addDoc(collection(db, "contacts"), {
+        name,
+        email,
+        message,
+        createdAt: serverTimestamp(),
+      });
+
+      toast({
+        title: "Transmission Sent",
+        description: "Your message has been successfully transmitted to FrontalMinds HQ. We will respond shortly.",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast({
+        variant: "destructive",
+        title: "Transmission Failed",
+        description: "There was an error sending your message. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -38,10 +67,12 @@ export default function ContactPage() {
               </Label>
               <Input
                 id="name"
+                name="name"
                 type="text"
                 required
                 placeholder="Enter your callsign"
                 className="bg-background/50 h-12 text-lg focus:border-primary focus:box-glow-accent transition-all"
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2 relative">
@@ -50,10 +81,12 @@ export default function ContactPage() {
               </Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 required
                 placeholder="Enter your secure channel address"
                 className="bg-background/50 h-12 text-lg focus:border-primary focus:box-glow-accent transition-all"
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2 relative">
@@ -62,13 +95,24 @@ export default function ContactPage() {
               </Label>
               <Textarea
                 id="message"
+                name="message"
                 required
                 placeholder="Compose your transmission..."
                 className="bg-background/50 text-lg min-h-[150px] focus:border-primary focus:box-glow-accent transition-all"
+                disabled={isLoading}
               />
             </div>
-            <Button type="submit" size="lg" className="w-full text-lg font-bold group hover:box-glow">
-              Transmit Message <Send className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <Button type="submit" size="lg" className="w-full text-lg font-bold group hover:box-glow" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Transmitting...
+                </>
+              ) : (
+                <>
+                  Transmit Message <Send className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </>
+              )}
             </Button>
           </form>
         </div>
