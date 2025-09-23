@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, User, Bot, Loader2 } from "lucide-react";
+import { Send, User, Bot, Loader2, BrainCircuit } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Message = {
@@ -66,16 +66,11 @@ export function ChatWindow() {
 
   return (
     <div className="max-w-2xl mx-auto h-[600px] flex flex-col bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg box-glow">
-        <div className="p-4 border-b border-primary/20 text-center font-code text-primary text-glow">
-          <pre className="text-sm">
-  _   _               _        ___                _           _ _           _
- | | | | __ _ _ __ __| |      / _ \__ _ _ __  ___| |__  _   _(_) |_ _   _  / \
- | |_| |/ _` | '__/ _` |_____| | | |/ _` | '_ \/ __| '_ \| | | | | __| | | |/ _ \
- |  _  | (_| | | | (_| |_____| |_| | (_| | | | \__ \ | | | |_| | | |_| |_| / ___ \
- |_| |_|\__,_|_|  \__,_|      \__\_\\__,_|_| |_|___/_| |_|\__,_|_|\__|\__, /_/   \_\
-                                                                    |___/
-          </pre>
-          <p className="text-lg">Ahmed @FrontalMinds</p>
+      <div className="p-4 border-b border-primary/20 flex items-center gap-4">
+        <div className="p-2 bg-primary/10 rounded-full box-glow">
+            <BrainCircuit className="h-6 w-6 text-primary" />
+        </div>
+        <h2 className="font-headline text-2xl text-glow">AI Assistant</h2>
       </div>
       <div className="flex-grow p-4">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
