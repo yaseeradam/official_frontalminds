@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ParticleBackground } from '@/components/layout/ParticleBackground';
+import { AuthProvider } from '@/hooks/use-auth';
 
 export const metadata: Metadata = {
   title: 'FrontalMinds',
@@ -24,13 +25,15 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
       </head>
       <body className={cn('font-body antialiased min-h-screen flex flex-col')}>
-        <ParticleBackground />
-        <Navbar />
-        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 z-10">
-          {children}
-        </main>
-        <Footer />
-        <Toaster />
+        <AuthProvider>
+          <ParticleBackground />
+          <Navbar />
+          <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 z-10">
+            {children}
+          </main>
+          <Footer />
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );

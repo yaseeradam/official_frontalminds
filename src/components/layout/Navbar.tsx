@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Terminal as TerminalIcon, Menu, X } from "lucide-react";
+import { Terminal as TerminalIcon, Menu, X, LogIn, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Terminal } from "@/components/terminal/Terminal";
+import { useAuth } from "@/hooks/use-auth";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -20,6 +21,7 @@ const navLinks = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const { user, signOutUser } = useAuth();
   const [isTerminalOpen, setTerminalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -71,6 +73,31 @@ export function Navbar() {
                 <TerminalIcon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
                 <span className="sr-only">Open Terminal</span>
               </Button>
+              
+              {user ? (
+                 <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={signOutUser}
+                  className="group"
+                >
+                  <LogOut className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <span className="sr-only">Logout</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className="group"
+                >
+                  <Link href="/login">
+                    <LogIn className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <span className="sr-only">Login</span>
+                  </Link>
+                </Button>
+              )}
+
 
               {/* Mobile Navigation Trigger */}
               <div className="md:hidden">
