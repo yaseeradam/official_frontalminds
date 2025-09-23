@@ -35,7 +35,7 @@ export default function ServicesPage() {
         subtitle="Explore our cutting-edge solutions designed to unlock the next stage of human evolution. Each service is a gateway to unparalleled cognitive abilities."
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         {services.map((service, index) => (
           <AnimatedSection key={service.title} delay={index * 0.1}>
             <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 group transition-all duration-300 hover:border-primary hover:-translate-y-2 hover:box-glow">
