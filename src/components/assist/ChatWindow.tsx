@@ -66,6 +66,17 @@ export function ChatWindow() {
 
   return (
     <div className="max-w-2xl mx-auto h-[600px] flex flex-col bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg box-glow">
+        <div className="p-4 border-b border-primary/20 text-center font-code text-primary text-glow">
+          <pre className="text-sm">
+  _   _               _        ___                _           _ _           _
+ | | | | __ _ _ __ __| |      / _ \__ _ _ __  ___| |__  _   _(_) |_ _   _  / \
+ | |_| |/ _` | '__/ _` |_____| | | |/ _` | '_ \/ __| '_ \| | | | | __| | | |/ _ \
+ |  _  | (_| | | | (_| |_____| |_| | (_| | | | \__ \ | | | |_| | | |_| |_| / ___ \
+ |_| |_|\__,_|_|  \__,_|      \__\_\\__,_|_| |_|___/_| |_|\__,_|_|\__|\__, /_/   \_\
+                                                                    |___/
+          </pre>
+          <p className="text-lg">Ahmed @FrontalMinds</p>
+      </div>
       <div className="flex-grow p-4">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
           <div className="space-y-6 pr-4">
