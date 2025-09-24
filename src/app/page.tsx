@@ -3,8 +3,10 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Globe, Smartphone, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Testimonials } from '@/components/home/Testimonials';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const featuredServices = [
   {
@@ -25,14 +27,14 @@ const featuredServices = [
 ];
 
 const techStack = [
-    { name: "Next.js", icon: "/tech/nextjs.svg" },
-    { name: "React", icon: "/tech/react.svg" },
-    { name: "Tailwind CSS", icon: "/tech/tailwind.svg" },
-    { name: "Firebase", icon: "/tech/firebase.svg" },
-    { name: "Node.js", icon: "/tech/nodejs.svg" },
-    { name: "TypeScript", icon: "/tech/typescript.svg" },
-    { name: "Docker", icon: "/tech/docker.svg" },
-    { name: "Cloud", icon: "/tech/cloud.svg" },
+    { name: "Next.js", imageId: "tech-nextjs" },
+    { name: "React", imageId: "tech-react" },
+    { name: "Tailwind CSS", imageId: "tech-tailwind" },
+    { name: "Firebase", imageId: "tech-firebase" },
+    { name: "Node.js", imageId: "tech-nodejs" },
+    { name: "TypeScript", imageId: "tech-typescript" },
+    { name: "Docker", imageId: "tech-docker" },
+    { name: "Cloud", imageId: "tech-cloud" },
 ];
 
 export default function Home() {
@@ -100,21 +102,26 @@ export default function Home() {
           </p>
         </div>
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-          {techStack.map((tech) => (
-            <div key={tech.name} className="flex flex-col items-center gap-2 text-center group">
-              <div className="w-20 h-20 flex items-center justify-center p-3 bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow">
-                 <svg
-                    role="img"
-                    aria-label={`${tech.name} logo`}
-                    className="w-full h-full text-foreground transition-colors group-hover:text-primary"
-                    fill="currentColor"
-                  >
-                    <use href={tech.icon} />
-                  </svg>
+          {techStack.map((tech) => {
+            const placeholder = PlaceHolderImages.find(p => p.id === tech.imageId);
+            return (
+              <div key={tech.name} className="flex flex-col items-center gap-2 text-center group">
+                <div className="w-20 h-20 flex items-center justify-center p-3 bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow">
+                  {placeholder && (
+                    <Image
+                      src={placeholder.imageUrl}
+                      alt={`${tech.name} logo`}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-contain"
+                      data-ai-hint={placeholder.imageHint}
+                    />
+                  )}
               </div>
               <p className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-primary">{tech.name}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </AnimatedSection>
       
