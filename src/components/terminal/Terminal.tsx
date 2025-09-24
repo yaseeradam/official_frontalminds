@@ -164,7 +164,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
             if (e.target instanceof HTMLElement && e.target.closest('button')) return;
             dragControls.start(e, { snapToCursor: false });
         }}
-        className="flex-shrink-0 p-2 flex items-center justify-between bg-background/80 cursor-grab active:cursor-grabbing"
+        className="flex-shrink-0 p-2 flex items-center justify-between bg-card/50 cursor-grab active:cursor-grabbing"
       >
         <div className="flex items-center gap-2">
             <TerminalIcon className="h-4 w-4 text-primary"/>
@@ -179,20 +179,20 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
             </Button>
         </div>
       </motion.div>
-      <div ref={scrollRef} className="flex-grow p-2 overflow-y-auto terminal-output bg-black/80">
+      <div ref={scrollRef} className="flex-grow p-2 overflow-y-auto terminal-output bg-background/95">
         {lines.map((line, index) => (
           <p key={index} className={cn('whitespace-pre-wrap break-words text-sm', {
-            'text-primary': line.type === 'input',
-            'text-foreground/80': line.type === 'output',
+            'text-primary/90': line.type === 'input',
+            'text-foreground': line.type === 'output',
             'text-destructive': line.type === 'error',
-            'text-primary/90 font-bold': line.type === 'system',
+            'text-accent font-bold': line.type === 'system',
             'text-yellow-400 text-glow': line.type === 'easter-egg',
           })}>
             {line.text}
           </p>
         ))}
          <div className="flex items-center">
-          <span className="text-primary">root@frontalminds:~#&nbsp;</span>
+          <span className="text-primary/90">root@frontalminds:~#&nbsp;</span>
           <input
             ref={inputRef}
             type="text"
@@ -242,7 +242,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
             exit={{ opacity: 0, scale: 0.9 }}
             dragMomentum={false}
             transition={{ type: 'spring', stiffness: 500, damping: 40, mass: 0.8 }}
-            className="fixed z-50 flex flex-col overflow-hidden max-w-[95vw] max-h-[90vh] min-w-[400px] min-h-[300px] bg-background rounded-lg border border-primary/30 shadow-2xl shadow-primary/20"
+            className="fixed z-50 flex flex-col overflow-hidden max-w-[95vw] max-h-[90vh] min-w-[400px] min-h-[300px] bg-card rounded-lg border border-primary/30 shadow-2xl shadow-primary/20"
             style={{
                 ...(isMaximized && { top: '5vh', left: '5vw', x:0, y:0, width: '90vw', height: '90vh' }),
                 ...(!isMaximized && { top: '0px', left: '0px'})
@@ -259,3 +259,5 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     </AnimatePresence>
   );
 }
+
+    
