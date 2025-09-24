@@ -4,6 +4,7 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
+import { Target, Eye } from "lucide-react";
 
 const teamMembers = [
   {
@@ -37,19 +38,34 @@ export default function AboutPage() {
       />
 
       <AnimatedSection className="mb-24">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <div className="space-y-4">
-            <h2 className="font-headline text-3xl md:text-4xl font-bold text-glow">Our Mission</h2>
-            <p className="text-muted-foreground text-lg">
-              To democratize cognitive enhancement through safe, accessible, and revolutionary neural interface technology. We believe in a future where human potential is not limited by biology, but expanded by ethical innovation.
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h2 className="font-headline text-3xl md:text-4xl font-bold text-glow">Our Vision</h2>
-            <p className="text-muted-foreground text-lg">
-              To create a seamless symbiosis between human consciousness and artificial intelligence, fostering a new era of creativity, learning, and understanding. We envision a world connected not just by networks, but by minds.
-            </p>
-          </div>
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+          <Card className="flex flex-col bg-card/50 backdrop-blur-sm border-primary/20 transition-all duration-300 hover:border-primary hover:box-glow">
+            <CardHeader className="flex-row gap-4 items-center">
+               <div className="bg-primary/10 p-3 rounded-full box-glow">
+                <Target className="h-8 w-8 text-primary" />
+              </div>
+              <CardTitle className="font-headline text-3xl text-glow">Our Mission</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground text-lg">
+                To democratize cognitive enhancement through safe, accessible, and revolutionary neural interface technology. We believe in a future where human potential is not limited by biology, but expanded by ethical innovation.
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card className="flex flex-col bg-card/50 backdrop-blur-sm border-primary/20 transition-all duration-300 hover:border-primary hover:box-glow">
+             <CardHeader className="flex-row gap-4 items-center">
+               <div className="bg-primary/10 p-3 rounded-full box-glow">
+                <Eye className="h-8 w-8 text-primary" />
+              </div>
+              <CardTitle className="font-headline text-3xl text-glow">Our Vision</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground text-lg">
+                To create a seamless symbiosis between human consciousness and artificial intelligence, fostering a new era of creativity, learning, and understanding. We envision a world connected not just by networks, but by minds.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </AnimatedSection>
 
