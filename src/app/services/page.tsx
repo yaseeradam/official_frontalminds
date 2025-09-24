@@ -2,9 +2,11 @@
 import { PageHeader } from "@/components/shared/PageHeader";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Globe, Smartphone, ShieldCheck } from "lucide-react";
+import { Globe, Smartphone, ShieldCheck, Search, Code, Rocket, ArrowRight } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const services = [
   {
@@ -23,6 +25,24 @@ const services = [
     description: "We offer comprehensive cybersecurity solutions, including security audits, penetration testing, and implementing defensive measures to protect your digital assets.",
   },
 ];
+
+const processSteps = [
+  {
+    icon: Search,
+    title: "1. Discovery & Strategy",
+    description: "We start by understanding your goals, audience, and project requirements to build a comprehensive strategy for success.",
+  },
+  {
+    icon: Code,
+    title: "2. Design & Development",
+    description: "Our team designs and develops your solution, focusing on user experience, performance, and scalability while keeping you updated.",
+  },
+  {
+    icon: Rocket,
+    title: "3. Launch & Support",
+    description: "After rigorous testing, we deploy your project. We also offer ongoing support and maintenance to ensure long-term success.",
+  },
+]
 
 const faqs = [
   {
@@ -81,22 +101,53 @@ export default function ServicesPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
         {services.map((service, index) => (
           <AnimatedSection key={service.title} delay={index * 0.1}>
-            <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 group transition-all duration-300 hover:border-primary hover:-translate-y-2 hover:box-glow text-center">
+            <Card className="h-full flex flex-col bg-card/50 backdrop-blur-sm border-primary/20 group transition-all duration-300 hover:border-primary hover:-translate-y-2 hover:box-glow text-center">
               <CardHeader className="flex flex-col items-center p-6 pb-4">
                 <div className="bg-primary/10 p-4 rounded-full mb-4 box-glow">
                   <service.icon className="h-8 w-8 text-primary" />
                 </div>
                 <CardTitle className="font-headline text-xl text-primary">{service.title}</CardTitle>
               </CardHeader>
-              <CardContent className="p-6 pt-0">
-                <CardDescription className="text-base text-muted-foreground">
+              <CardContent className="flex-grow p-6 pt-0 flex flex-col">
+                <CardDescription className="text-base text-muted-foreground flex-grow">
                   {service.description}
                 </CardDescription>
+                <Button asChild variant="outline" className="mt-6 group/button hover:bg-primary/10 hover:text-primary">
+                    <Link href="/contact">
+                        Learn More <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/button:translate-x-1" />
+                    </Link>
+                </Button>
               </CardContent>
             </Card>
           </AnimatedSection>
         ))}
       </div>
+
+       <AnimatedSection className="mb-24">
+        <div className="text-center">
+          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">How We Work</h2>
+          <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-12">
+            Our streamlined process ensures quality and efficiency from start to finish.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 text-center">
+          {processSteps.map((step, index) => (
+            <AnimatedSection key={step.title} delay={index * 0.1}>
+              <Card className="bg-card/30 backdrop-blur-sm h-full border-dashed border-primary/30">
+                <CardHeader>
+                  <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit mb-2 box-glow">
+                    <step.icon className="h-8 w-8 text-primary"/>
+                  </div>
+                  <CardTitle className="font-headline text-xl text-primary">{step.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{step.description}</p>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+          ))}
+        </div>
+      </AnimatedSection>
 
       <AnimatedSection>
         <div className="text-center">
