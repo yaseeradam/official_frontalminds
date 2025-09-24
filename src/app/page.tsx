@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Testimonials } from '@/components/home/Testimonials';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { cn } from '@/lib/utils';
 
 const featuredServices = [
   {
@@ -101,27 +102,57 @@ export default function Home() {
             We use modern, robust, and scalable technologies to build our solutions.
           </p>
         </div>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-          {techStack.map((tech) => {
-            const placeholder = PlaceHolderImages.find(p => p.id === tech.imageId);
-            return (
-              <div key={tech.name} className="flex flex-col items-center gap-2 text-center group">
-                <div className="w-20 h-20 flex items-center justify-center bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow overflow-hidden">
-                  {placeholder && (
-                    <Image
-                      src={placeholder.imageUrl}
-                      alt={`${tech.name} logo`}
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-cover"
-                      data-ai-hint={placeholder.imageHint}
-                    />
-                  )}
-              </div>
-              <p className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-primary">{tech.name}</p>
-            </div>
-            );
-          })}
+        <div
+          className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+        >
+          <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-scroll-left">
+            {techStack.map((tech) => {
+              const placeholder = PlaceHolderImages.find(p => p.id === tech.imageId);
+              return (
+                <li key={tech.name}>
+                  <div className="flex flex-col items-center gap-2 text-center group">
+                    <div className="w-20 h-20 flex items-center justify-center bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow overflow-hidden">
+                      {placeholder && (
+                        <Image
+                          src={placeholder.imageUrl}
+                          alt={`${tech.name} logo`}
+                          width={80}
+                          height={80}
+                          className="w-full h-full object-cover"
+                          data-ai-hint={placeholder.imageHint}
+                        />
+                      )}
+                  </div>
+                  <p className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-primary">{tech.name}</p>
+                </div>
+              </li>
+              );
+            })}
+          </ul>
+           <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-scroll-left" aria-hidden="true">
+            {techStack.map((tech) => {
+              const placeholder = PlaceHolderImages.find(p => p.id === tech.imageId);
+              return (
+                <li key={tech.name}>
+                  <div className="flex flex-col items-center gap-2 text-center group">
+                    <div className="w-20 h-20 flex items-center justify-center bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow overflow-hidden">
+                      {placeholder && (
+                        <Image
+                          src={placeholder.imageUrl}
+                          alt={`${tech.name} logo`}
+                          width={80}
+                          height={80}
+                          className="w-full h-full object-cover"
+                          data-ai-hint={placeholder.imageHint}
+                        />
+                      )}
+                  </div>
+                  <p className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-primary">{tech.name}</p>
+                </div>
+              </li>
+              );
+            })}
+          </ul>
         </div>
       </AnimatedSection>
       
