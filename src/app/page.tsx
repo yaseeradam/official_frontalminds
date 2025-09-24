@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Globe, Smartphone, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Testimonials } from '@/components/home/Testimonials';
 
 const featuredServices = [
   {
@@ -22,6 +23,15 @@ const featuredServices = [
   },
 ];
 
+const techStack = [
+    { name: "Next.js", icon: "/tech/nextjs.svg" },
+    { name: "React", icon: "/tech/react.svg" },
+    { name: "Tailwind CSS", icon: "/tech/tailwind.svg" },
+    { name: "Firebase", icon: "/tech/firebase.svg" },
+    { name: "Node.js", icon: "/tech/nodejs.svg" },
+    { name: "TypeScript", icon: "/tech/typescript.svg" },
+];
+
 export default function Home() {
   return (
     <div className="space-y-24 md:space-y-32">
@@ -32,7 +42,7 @@ export default function Home() {
           </span>
         </h1>
         <p className="max-w-3xl text-lg md:text-xl text-muted-foreground mb-10">
-          Pioneering the future of neural interfaces and cognitive enhancement. We merge technology with the mind to unlock human potential.
+          Pioneering the future of digital solutions. We merge innovative technology with clear-minded strategy to unlock your business potential.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <Button asChild size="lg" className="font-bold text-lg group transition-all duration-300 hover:box-glow">
@@ -74,6 +84,34 @@ export default function Home() {
                     </Card>
                 </AnimatedSection>
             ))}
+        </div>
+      </AnimatedSection>
+
+      <Testimonials />
+
+       <AnimatedSection>
+        <div className="text-center">
+          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">Our Technology Stack</h2>
+          <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-12">
+            We use modern, robust, and scalable technologies to build our solutions.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          {techStack.map((tech) => (
+            <div key={tech.name} className="flex flex-col items-center gap-2 text-center group">
+              <div className="w-20 h-20 flex items-center justify-center p-3 bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow">
+                 <svg
+                    role="img"
+                    aria-label={`${tech.name} logo`}
+                    className="w-full h-full text-foreground transition-colors group-hover:text-primary"
+                    fill="currentColor"
+                  >
+                    <use href={tech.icon} />
+                  </svg>
+              </div>
+              <p className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-primary">{tech.name}</p>
+            </div>
+          ))}
         </div>
       </AnimatedSection>
       
