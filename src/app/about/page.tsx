@@ -1,10 +1,13 @@
+
 import Image from "next/image";
+import Link from "next/link";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
-import { Target, Eye } from "lucide-react";
+import { Target, Eye, ArrowRight } from "lucide-react";
 
 const teamMembers = [
   {
@@ -69,7 +72,7 @@ export default function AboutPage() {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection>
+      <AnimatedSection className="mb-24">
         <h2 className="text-center font-headline text-4xl md:text-5xl font-bold mb-12 text-glow">Meet the Team</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {teamMembers.map((member, index) => {
@@ -98,6 +101,19 @@ export default function AboutPage() {
             );
           })}
         </div>
+      </AnimatedSection>
+
+       <AnimatedSection className="text-center">
+          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">See Our Vision in Action</h2>
+          <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-8">
+            Explore the groundbreaking projects that are turning our vision into reality and paving the way for a new era of human consciousness.
+          </p>
+          <Button asChild size="lg" className="font-bold text-lg group transition-all duration-300 hover:box-glow">
+              <Link href="/projects">
+                  View Our Projects
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+          </Button>
       </AnimatedSection>
     </div>
   );
