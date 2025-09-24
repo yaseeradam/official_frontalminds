@@ -22,7 +22,7 @@ const services = [
   {
     icon: ShieldCheck,
     title: "Cybersecurity Services",
-    description: "We offer comprehensive cybersecurity solutions, including security audits, penetration testing, and implementing defensive measures to protect your digital assets.",
+    description: "Our security expertise covers offensive (Red Team), defensive (Blue Team), and network security. We provide penetration testing, implement defensive measures, and secure your network infrastructure.",
   },
 ];
 
