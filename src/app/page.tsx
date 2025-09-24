@@ -1,3 +1,4 @@
+
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Globe, Smartphone, ShieldCheck } from 'lucide-react';
@@ -30,6 +31,8 @@ const techStack = [
     { name: "Firebase", icon: "/tech/firebase.svg" },
     { name: "Node.js", icon: "/tech/nodejs.svg" },
     { name: "TypeScript", icon: "/tech/typescript.svg" },
+    { name: "Docker", icon: "/tech/docker.svg" },
+    { name: "Cloud", icon: "/tech/cloud.svg" },
 ];
 
 export default function Home() {
