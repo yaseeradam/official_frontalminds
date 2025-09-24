@@ -106,14 +106,14 @@ export default function Home() {
             const placeholder = PlaceHolderImages.find(p => p.id === tech.imageId);
             return (
               <div key={tech.name} className="flex flex-col items-center gap-2 text-center group">
-                <div className="w-20 h-20 flex items-center justify-center p-3 bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow">
+                <div className="w-20 h-20 flex items-center justify-center bg-muted/50 rounded-full transition-all duration-300 group-hover:bg-primary/10 group-hover:scale-110 group-hover:box-glow overflow-hidden">
                   {placeholder && (
                     <Image
                       src={placeholder.imageUrl}
                       alt={`${tech.name} logo`}
-                      width={64}
-                      height={64}
-                      className="w-full h-full object-contain"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
                       data-ai-hint={placeholder.imageHint}
                     />
                   )}
