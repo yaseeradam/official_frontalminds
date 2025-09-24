@@ -61,7 +61,7 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
-                  className="bg-background/50"
+                  className="bg-background/50 text-lg"
                 />
                 <Button type="submit" size="icon" disabled={isLoading}>
                   {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
