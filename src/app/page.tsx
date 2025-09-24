@@ -35,7 +35,7 @@ export default function Home() {
           Pioneering the future of neural interfaces and cognitive enhancement. We merge technology with the mind to unlock human potential.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg" className="font-bold text-lg group transition-all duration-300 hover:box-glow hover:text-primary-foreground">
+          <Button asChild size="lg" className="font-bold text-lg group transition-all duration-300 hover:box-glow">
             <Link href="/services">
               Explore Services
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
