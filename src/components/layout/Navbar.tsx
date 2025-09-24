@@ -85,7 +85,7 @@ export function Navbar() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTerminalOpen(true)}
-                className="group"
+                className="group hidden md:inline-flex"
               >
                 <TerminalIcon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
                 <span className="sr-only">Open Terminal</span>
