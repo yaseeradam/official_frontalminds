@@ -133,7 +133,7 @@ export default function ServicesPage() {
         <div className="grid md:grid-cols-3 gap-8 text-center">
           {processSteps.map((step, index) => (
             <AnimatedSection key={step.title} delay={index * 0.1}>
-              <Card className="bg-card/30 backdrop-blur-sm h-full border-dashed border-primary/30">
+              <Card className="bg-card/30 backdrop-blur-sm h-full border-dashed border-primary/30 transition-all duration-300 hover:border-primary/80 hover:box-glow">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit mb-2 box-glow">
                     <step.icon className="h-8 w-8 text-primary"/>
