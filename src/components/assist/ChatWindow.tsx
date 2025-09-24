@@ -117,11 +117,10 @@ export function ChatWindow() {
                     <Bot />
                   </AvatarFallback>
                 </Avatar>
-                <div className="bg-muted text-muted-foreground p-3 rounded-lg">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Loader2 className="h-4 w-4 animate-spin"/>
-                    <span>Thinking...</span>
-                  </div>
+                <div className="bg-muted text-muted-foreground p-3 rounded-lg flex items-center space-x-1.5">
+                  <span className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.3s]"></span>
+                  <span className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.15s]"></span>
+                  <span className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></span>
                 </div>
               </div>
             )}
