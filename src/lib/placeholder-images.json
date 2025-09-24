@@ -68,50 +68,50 @@
     },
     {
       "id": "tech-nextjs",
-      "description": "Next.js logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1653499676737-becf2c9562c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxuZXh0anMlMjBsb2dvfGVufDB8fHx8MTc1ODczNTcwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Next.js logo",
+      "imageUrl": "/tech/nextjs.png",
       "imageHint": "nextjs logo"
     },
     {
       "id": "tech-react",
-      "description": "React logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1758582268064-1ad3b2699ce5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyZWFjdCUyMGxvZ298ZW58MHx8fHwxNzU4NzE5ODgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "React logo",
+      "imageUrl": "/tech/react.png",
       "imageHint": "react logo"
     },
     {
       "id": "tech-tailwind",
-      "description": "Tailwind CSS logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1647967076515-c494fa24fed6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0YWlsd2luZCUyMGxvZ298ZW58MHx8fHwxNzU4NzM1NzAzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Tailwind CSS logo",
+      "imageUrl": "/tech/tailwind.png",
       "imageHint": "tailwind logo"
     },
     {
       "id": "tech-firebase",
-      "description": "Firebase logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1637689537819-e6a3091b1703?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmaXJlYmFzZSUyMGxvZ298ZW58MHx8fHwxNzU4NzM1NzAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Firebase logo",
+      "imageUrl": "/tech/firebase.png",
       "imageHint": "firebase logo"
     },
     {
       "id": "tech-nodejs",
-      "description": "Node.js logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1728406970302-8be1af6bda4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxub2RlanMlMjBsb2dvfGVufDB8fHx8MTc1ODczNTcwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Node.js logo",
+      "imageUrl": "/tech/nodejs.png",
       "imageHint": "nodejs logo"
     },
     {
       "id": "tech-typescript",
-      "description": "TypeScript logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1621986191859-a88d73c6ed0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0eXBlc2NyaXB0JTIwbG9nb3xlbnwwfHx8fDE3NTg3MzAzMzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "TypeScript logo",
+      "imageUrl": "/tech/typescript.png",
       "imageHint": "typescript logo"
     },
     {
       "id": "tech-docker",
-      "description": "Docker logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1701500096456-28186c4a306d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkb2NrZXIlMjBsb2dvfGVufDB8fHx8MTc1ODczNTcwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Docker logo",
+      "imageUrl": "/tech/docker.png",
       "imageHint": "docker logo"
     },
     {
       "id": "tech-cloud",
-      "description": "Cloud logo placeholder",
-      "imageUrl": "https://images.unsplash.com/photo-1634467435669-831f777a6432?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjbG91ZCUyMGxvZ298ZW58MHx8fHwxNzU4NzM0MDA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Cloud logo",
+      "imageUrl": "/tech/cloud.png",
       "imageHint": "cloud logo"
     }
   ]
