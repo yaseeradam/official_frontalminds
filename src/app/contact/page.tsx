@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -11,13 +12,24 @@ import { Send, Mail, User, MessageSquare, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { useAuth } from "@/hooks/use-auth";
+import { LoginPromptDialog } from "@/components/shared/LoginPromptDialog";
+import { cn } from "@/lib/utils";
 
 export default function ContactPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const { user, loading } = useAuth();
+  const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!user) {
+      setLoginPromptOpen(true);
+      return;
+    }
+
     setIsLoading(true);
 
     const form = e.target as HTMLFormElement;
@@ -31,6 +43,7 @@ export default function ContactPage() {
         name,
         email,
         message,
+        userId: user.uid,
         createdAt: serverTimestamp(),
       });
 
@@ -51,6 +64,8 @@ export default function ContactPage() {
     }
   };
 
+  const isFormDisabled = isLoading || (!user && !loading);
+
   return (
     <div>
       <PageHeader
@@ -59,7 +74,13 @@ export default function ContactPage() {
       />
 
       <AnimatedSection>
-        <div className="max-w-2xl mx-auto p-6 md:p-8 bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg box-glow">
+        <div className="max-w-2xl mx-auto p-6 md:p-8 bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg box-glow relative">
+          {!user && !loading && (
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center rounded-lg">
+                <p className="text-lg font-headline mb-4">Please log in to contact us.</p>
+                <Button onClick={() => setLoginPromptOpen(true)}>Login</Button>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-2 relative">
               <Label htmlFor="name" className="text-lg font-headline text-primary/80 flex items-center gap-2">
@@ -72,7 +93,8 @@ export default function ContactPage() {
                 required
                 placeholder="Enter your callsign"
                 className="bg-background/50 h-12 text-lg focus:border-primary focus:box-glow-accent transition-all"
-                disabled={isLoading}
+                disabled={isFormDisabled}
+                defaultValue={user?.displayName || ''}
               />
             </div>
             <div className="space-y-2 relative">
@@ -86,7 +108,8 @@ export default function ContactPage() {
                 required
                 placeholder="Enter your secure channel address"
                 className="bg-background/50 h-12 text-lg focus:border-primary focus:box-glow-accent transition-all"
-                disabled={isLoading}
+                disabled={isFormDisabled}
+                defaultValue={user?.email || ''}
               />
             </div>
             <div className="space-y-2 relative">
@@ -99,7 +122,7 @@ export default function ContactPage() {
                 required
                 placeholder="Compose your transmission..."
                 className="bg-background/50 text-lg min-h-[150px] focus:border-primary focus:box-glow-accent transition-all"
-                disabled={isLoading}
+                disabled={isFormDisabled}
               />
             </div>
             <Button type="submit" size="lg" className="w-full text-lg font-bold group hover:box-glow" disabled={isLoading}>
@@ -117,6 +140,7 @@ export default function ContactPage() {
           </form>
         </div>
       </AnimatedSection>
+      <LoginPromptDialog isOpen={isLoginPromptOpen} onOpenChange={setLoginPromptOpen} />
     </div>
   );
 }
