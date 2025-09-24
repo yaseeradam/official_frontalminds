@@ -1,24 +1,24 @@
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, BrainCircuit, Zap, Puzzle } from 'lucide-react';
+import { ArrowRight, Globe, Smartphone, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const featuredServices = [
   {
-    icon: BrainCircuit,
-    title: 'Neuro-Augmentation',
-    description: 'Enhance cognitive functions like memory, focus, and learning speed.',
+    icon: Globe,
+    title: 'Website Development',
+    description: 'Building modern, responsive websites tailored to your business needs.',
   },
   {
-    icon: Zap,
-    title: 'BCI Development Kits',
-    description: 'Create custom applications for Brain-Computer Interfaces with our open-source SDKs.',
+    icon: Smartphone,
+    title: 'Mobile App Development',
+    description: 'Creating intuitive and robust mobile applications for iOS and Android.',
   },
   {
-    icon: Puzzle,
-    title: 'Cognitive AGI Integration',
-    description: 'Seamlessly integrate with advanced AI for collaborative problem-solving.',
+    icon: ShieldCheck,
+    title: 'Cybersecurity Solutions',
+    description: 'Protecting your digital assets with comprehensive security services.',
   },
 ];
 
@@ -51,9 +51,9 @@ export default function Home() {
 
       <AnimatedSection>
         <div className="text-center">
-            <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">Unlock Your Potential</h2>
+            <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">Our Core Expertise</h2>
             <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-12">
-                Our services are at the forefront of cognitive enhancement technology.
+                We deliver cutting-edge digital solutions tailored to your business needs.
             </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -62,7 +62,7 @@ export default function Home() {
                     <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 group transition-all duration-300 hover:border-primary hover:-translate-y-2 hover:box-glow text-center">
                          <CardHeader className="flex flex-col items-center text-center p-6 pb-2">
                             <div className="bg-primary/10 p-4 rounded-full mb-4">
-                                <service.icon className="h-8 w-8 text-white" />
+                                <service.icon className="h-8 w-8 text-primary" />
                             </div>
                             <CardTitle className="font-headline text-xl text-primary-foreground leading-tight">{service.title}</CardTitle>
                         </CardHeader>
@@ -78,9 +78,9 @@ export default function Home() {
       </AnimatedSection>
       
       <AnimatedSection className="text-center">
-          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">Our Blueprint for the Future</h2>
+          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">Our Blueprint for Success</h2>
           <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-8">
-            Explore the groundbreaking projects that are paving the way for a new era of human consciousness.
+            Explore the groundbreaking projects that showcase our skills and innovation.
           </p>
           <Button asChild size="lg" className="font-bold text-lg group transition-all duration-300 hover:box-glow">
               <Link href="/projects">
