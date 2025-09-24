@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
@@ -16,10 +17,14 @@ type Line = {
 
 const HELP_MESSAGE = `Available commands:
   help      - show this help message
+  home      - navigate to the Home page
   about     - navigate to the About page
   services  - navigate to the Services page
   projects  - navigate to the Projects page
   contact   - navigate to the Contact page
+  assist    - open the AI Assistant
+  login     - navigate to the Login page
+  signup    - navigate to the Sign Up page
   clear/cls - clear the terminal screen
   exit      - close the terminal`;
 

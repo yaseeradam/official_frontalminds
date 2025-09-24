@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -32,20 +33,28 @@ const routeCommandPrompt = ai.definePrompt({
   name: 'routeCommandPrompt',
   input: {schema: TerminalCommandInputSchema},
   output: {schema: TerminalCommandOutputSchema},
-  prompt: `You are a command router for a website terminal. Based on the command entered by the user, determine the appropriate navigation path.
+  prompt: `You are a command router for a website terminal. Based on the command entered by the user, determine the appropriate navigation path or easter egg response.
 
 Valid commands and their corresponding paths are:
 - help: displays available commands (no navigation required)
+- home: /
 - about: /about
 - services: /services
 - projects: /projects
 - contact: /contact
+- assist: /assist
+- login: /login
+- signup: /signup
 - clear / cls: clears the terminal screen (no navigation required)
 - exit: closes the terminal (no navigation required)
 
-If the command is not recognized, return an empty string for the navigationPath.
+Easter Egg Commands:
+If the command is "frontal" or "brain", return the message: "A mind is a terrible thing to waste... and a wonderful thing to enhance."
+If the command is "matrix", return the message: "Wake up, Neo... The matrix has you."
+If the command is "sudo", return the message: "User is not in the sudoers file. This incident will be reported."
+If the command is "whoami", return the message: "You are a seeker of knowledge, an explorer of the digital frontier."
 
-If the command is "frontal" or "brain", return a special easter egg message.
+If the command is not recognized, return an empty string for both navigationPath and easterEgg.
 
 Command: {{{command}}}
 `,
@@ -58,12 +67,6 @@ const routeCommandFlow = ai.defineFlow(
     outputSchema: TerminalCommandOutputSchema,
   },
   async input => {
-    if (input.command === 'frontal' || input.command === 'brain') {
-      return {
-        navigationPath: '',
-        easterEgg: 'You found a secret!',
-      };
-    }
     const {output} = await routeCommandPrompt(input);
     return output!;
   }
