@@ -3,8 +3,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Terminal as TerminalIcon, Menu, X, LogIn, LogOut } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Terminal as TerminalIcon, Menu, X, LogIn, LogOut, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -33,6 +33,9 @@ export function Navbar() {
   const [isTerminalOpen, setTerminalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const [sparklePositions, setSparklePositions] = useState<Array<{id: number, x: number, y: number, delay: number}>>([]);
+  const logoRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +49,23 @@ export function Navbar() {
     // Close mobile menu on page navigation
     setMobileMenuOpen(false);
   }, [pathname]);
+
+  // Generate sparkle positions for logo animation
+  useEffect(() => {
+    const generateSparkles = () => {
+      const sparkles = Array.from({ length: 6 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        delay: Math.random() * 2,
+      }));
+      setSparklePositions(sparkles);
+    };
+
+    generateSparkles();
+    const interval = setInterval(generateSparkles, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const getInitials = (name?: string | null) => {
     if (!name) return "U";
@@ -64,19 +84,88 @@ export function Navbar() {
       )}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold text-glow">
-              FrontalMinds
+            <Link
+              ref={logoRef}
+              href="/"
+              className="relative flex items-center gap-2 font-headline text-2xl font-bold text-glow group cursor-pointer"
+              onMouseEnter={() => setIsLogoHovered(true)}
+              onMouseLeave={() => setIsLogoHovered(false)}
+            >
+              <div className="relative">
+                <span className={cn(
+                  "transition-all duration-500 ease-in-out",
+                  isLogoHovered ? "scale-110 text-primary" : "text-glow"
+                )}>
+                  FrontalMinds
+                </span>
+
+                {/* Animated sparkles */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {sparklePositions.map((sparkle) => (
+                    <Sparkles
+                      key={sparkle.id}
+                      className={cn(
+                        "absolute w-3 h-3 text-yellow-400 opacity-0 transition-all duration-1000 ease-in-out",
+                        isLogoHovered ? "animate-pulse" : ""
+                      )}
+                      style={{
+                        left: `${sparkle.x}%`,
+                        top: `${sparkle.y}%`,
+                        animationDelay: `${sparkle.delay}s`,
+                        transform: isLogoHovered ? 'scale(1)' : 'scale(0)',
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Glow effect */}
+                <div className={cn(
+                  "absolute inset-0 bg-gradient-to-r from-primary/20 to-blue-500/20 blur-xl transition-opacity duration-500 -z-10",
+                  isLogoHovered ? "opacity-100" : "opacity-0"
+                )} />
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map(({ href, label }) => (
-                <Button key={href} variant="ghost" asChild className={cn(
-                  "text-lg font-medium",
-                  pathname === href ? "text-primary" : "text-muted-foreground hover:text-primary hover:bg-primary/10"
-                )}>
-                  <Link href={href}>{label}</Link>
-                </Button>
+              {navLinks.map(({ href, label }, index) => (
+                <div key={href} className="relative group">
+                  <Button
+                    variant="ghost"
+                    asChild
+                    className={cn(
+                      "text-lg font-medium relative overflow-hidden transition-all duration-300 ease-in-out",
+                      pathname === href
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary hover:bg-primary/10"
+                    )}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                    }}
+                  >
+                    <Link href={href} className="relative z-10 px-4 py-2">
+                      {label}
+                    </Link>
+                  </Button>
+
+                  {/* Animated underline */}
+                  <div className={cn(
+                    "absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-blue-500 transition-all duration-300 ease-in-out",
+                    pathname === href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  )} style={{
+                    transformOrigin: pathname === href ? "center" : "left"
+                  }} />
+
+                  {/* Hover glow effect */}
+                  <div className={cn(
+                    "absolute inset-0 bg-gradient-to-r from-primary/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"
+                  )} />
+
+                  {/* Active page indicator */}
+                  {pathname === href && (
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+                  )}
+                </div>
               ))}
             </nav>
 
@@ -85,25 +174,42 @@ export function Navbar() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTerminalOpen(true)}
-                className="group hidden md:inline-flex"
+                className="group hidden md:inline-flex relative overflow-hidden"
               >
-                <TerminalIcon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                <div className="relative">
+                  <TerminalIcon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full blur-sm -z-10" />
+                </div>
+
+                {/* Pulse effect */}
+                <div className="absolute inset-0 rounded-full bg-primary/5 animate-ping opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                 <span className="sr-only">Open Terminal</span>
               </Button>
               
               {user ? (
-                 <DropdownMenu>
+                <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                      <Avatar className="h-10 w-10 border-2 border-transparent group-hover:border-primary transition-colors">
-                        <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
-                        <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
-                      </Avatar>
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full group overflow-hidden">
+                      <div className="relative">
+                        <Avatar className="h-10 w-10 border-2 border-transparent group-hover:border-primary transition-all duration-300 group-hover:scale-105 group-hover:rotate-3">
+                          <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                          <AvatarFallback className="group-hover:bg-primary/10 transition-colors duration-300">
+                            {getInitials(user.displayName)}
+                          </AvatarFallback>
+                        </Avatar>
+
+                        {/* Online status indicator */}
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-background rounded-full animate-pulse" />
+
+                        {/* Hover glow */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+                      </div>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuItem onClick={signOutUser}>
-                      <LogOut className="mr-2 h-4 w-4" />
+                    <DropdownMenuItem onClick={signOutUser} className="group">
+                      <LogOut className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
                       <span>Log out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -113,10 +219,13 @@ export function Navbar() {
                   variant="ghost"
                   size="icon"
                   asChild
-                  className="group"
+                  className="group relative overflow-hidden"
                 >
                   <Link href="/login">
-                    <LogIn className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <div className="relative">
+                      <LogIn className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12" />
+                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full blur-sm -z-10" />
+                    </div>
                     <span className="sr-only">Login</span>
                   </Link>
                 </Button>
@@ -127,37 +236,74 @@ export function Navbar() {
               <div className="md:hidden">
                 <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                   <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <Menu className="h-6 w-6" />
+                    <Button variant="ghost" size="icon" className="group relative overflow-hidden">
+                      <div className="relative">
+                        <Menu className="h-6 w-6 group-hover:scale-110 group-hover:rotate-180 transition-all duration-300" />
+                        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full blur-sm -z-10" />
+                      </div>
                       <span className="sr-only">Open menu</span>
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background/90 backdrop-blur-lg">
+                  <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background/95 backdrop-blur-xl border-l border-border/50">
                     <div className="flex flex-col h-full">
-                       <div className="flex justify-between items-center mb-8">
-                        <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold text-glow">
-                          FrontalMinds
+                      <div className="flex justify-between items-center mb-8">
+                        <Link
+                          href="/"
+                          className="relative flex items-center gap-2 font-headline text-2xl font-bold text-glow group"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <div className="relative">
+                            <span className="group-hover:scale-105 transition-transform duration-300">FrontalMinds</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg -z-10" />
+                          </div>
                         </Link>
                         <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <X className="h-6 w-6" />
-                            </Button>
+                          <Button variant="ghost" size="icon" className="group">
+                            <X className="h-6 w-6 group-hover:scale-110 group-hover:rotate-90 transition-all duration-300" />
+                          </Button>
                         </SheetTrigger>
                       </div>
-                      <nav className="flex flex-col gap-4">
-                        {navLinks.map(({ href, label }) => (
-                          <Link
-                            key={href}
-                            href={href}
-                            className={cn(
-                              "text-xl font-medium p-2 rounded-md",
-                              pathname === href
-                                ? "bg-primary/10 text-primary"
-                                : "text-foreground hover:bg-muted"
-                            )}
-                          >
-                            {label}
-                          </Link>
+
+                      <nav className="flex flex-col gap-2">
+                        {navLinks.map(({ href, label }, index) => (
+                          <div key={href} className="relative group">
+                            <Link
+                              href={href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className={cn(
+                                "relative text-xl font-medium p-4 rounded-xl transition-all duration-300 flex items-center gap-3",
+                                pathname === href
+                                  ? "bg-gradient-to-r from-primary/15 to-blue-500/15 text-primary border border-primary/20"
+                                  : "text-foreground hover:bg-muted/50 hover:translate-x-2"
+                              )}
+                              style={{
+                                animationDelay: `${index * 50}ms`,
+                              }}
+                            >
+                              {/* Active indicator dot */}
+                              <div className={cn(
+                                "w-2 h-2 rounded-full transition-all duration-300",
+                                pathname === href
+                                  ? "bg-primary scale-100 animate-pulse"
+                                  : "bg-transparent scale-0 group-hover:bg-primary/50 group-hover:scale-75"
+                              )} />
+
+                              <span className="flex-1">{label}</span>
+
+                              {/* Hover arrow */}
+                              <div className={cn(
+                                "transition-all duration-300",
+                                pathname === href
+                                  ? "translate-x-0 opacity-100"
+                                  : "translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                              )}>
+                                →
+                              </div>
+                            </Link>
+
+                            {/* Shimmer effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] rounded-xl" />
+                          </div>
                         ))}
                       </nav>
                     </div>

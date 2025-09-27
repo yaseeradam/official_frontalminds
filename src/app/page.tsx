@@ -159,7 +159,7 @@ export default function Home() {
       <AnimatedSection className="text-center">
           <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4 text-glow">Our Blueprint for Success</h2>
           <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-8">
-            Explore the groundbreaking projects that showcase our skills and innovation.
+            Explore our portfolio of real-world projects that showcase our expertise in modern web development and digital innovation.
           </p>
           <Button asChild size="lg" className="font-bold text-lg group transition-all duration-300 hover:box-glow">
               <Link href="/projects">

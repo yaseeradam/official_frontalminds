@@ -10,6 +10,9 @@ import { AuthProvider } from '@/hooks/use-auth';
 export const metadata: Metadata = {
   title: 'FrontalMinds',
   description: 'Welcome to FrontalMinds',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

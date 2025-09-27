@@ -7,28 +7,50 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
-import { Target, Eye, ArrowRight } from "lucide-react";
+import { Target, Eye, ArrowRight, Linkedin, Twitter, Github, Mail, MessageCircle } from "lucide-react";
 
 const teamMembers = [
   {
-    name: "Dr. Aris Thorne",
-    role: "Founder & Chief Neuroscientist",
+    name: "Alhafiz Yaseer K Adam",
+    role: "Founder & Chief Dev",
     imageId: "team-1",
+    social: {
+      linkedin: "https://linkedin.com/in/yaseer-adam",
+      twitter: "https://x.com/yaseerkadam",
+      github: "https://github.com/yaseeradam/",
+      whatsapp: "https://wa.me/8104827838",
+      email: "engineeryaseerdl@gmail.com"
+    }
   },
   {
-    name: "Jena Valerius",
-    role: "Lead BCI Engineer",
+    name: "Yusuf Abdullahi",
+    role: "Chief Operating Officer",
     imageId: "team-2",
+    social: {
+      linkedin: "https://linkedin.com/in/yusuf-abdullahi",
+      whatsapp: "https://wa.me/1234567891",
+      email: "yusuf@frontalminds.com"
+    }
   },
   {
-    name: "Kaelen Rask",
-    role: "Cognitive AI Specialist",
+    name: "Ibrahim Hamza",
+    role: "Chief Technology Officer",
     imageId: "team-3",
+    social: {
+      linkedin: "https://linkedin.com/in/ibrahim-hamza",
+      whatsapp: "https://wa.me/1234567892",
+      email: "ibrahim@frontalminds.com"
+    }
   },
   {
-    name: "Zyla Nyx",
-    role: "Quantum Data Analyst",
+    name: "Abbas Aliyu",
+    role: "Chief Finance Officer",
     imageId: "team-4",
+    social: {
+      linkedin: "https://linkedin.com/in/abbas-aliyu",
+      whatsapp: "https://wa.me/1234567893",
+      email: "abbas@frontalminds.com"
+    }
   },
 ];
 
@@ -37,7 +59,7 @@ export default function AboutPage() {
     <div>
       <PageHeader
         title="About FrontalMinds"
-        subtitle="Unveiling the architects of tomorrow's consciousness. We are a collective of scientists, engineers, and visionaries dedicated to transcending the limits of the human mind."
+        subtitle="Meet the innovative minds behind FrontalMinds. We're a passionate team of developers, engineers, and tech enthusiasts committed to building cutting-edge solutions that shape the future of technology and push the boundaries of what's possible."
       />
 
       <AnimatedSection className="mb-24">
@@ -94,7 +116,59 @@ export default function AboutPage() {
                   </CardHeader>
                   <CardContent className="p-4">
                     <CardTitle className="font-headline text-xl text-primary">{member.name}</CardTitle>
-                    <CardDescription className="text-muted-foreground">{member.role}</CardDescription>
+                    <CardDescription className="text-muted-foreground mb-4">{member.role}</CardDescription>
+
+                    {/* Social Media Buttons */}
+                    <div className="flex justify-center space-x-3">
+                      {member.social.linkedin && (
+                        <Link
+                          href={member.social.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-primary/10 hover:bg-primary/20 p-2 rounded-full transition-all duration-300 hover:scale-110 hover:text-primary"
+                        >
+                          <Linkedin className="h-4 w-4" />
+                        </Link>
+                      )}
+                      {member.social.twitter && (
+                        <Link
+                          href={member.social.twitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-primary/10 hover:bg-primary/20 p-2 rounded-full transition-all duration-300 hover:scale-110 hover:text-primary"
+                        >
+                          <Twitter className="h-4 w-4" />
+                        </Link>
+                      )}
+                      {member.social.github && (
+                        <Link
+                          href={member.social.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-primary/10 hover:bg-primary/20 p-2 rounded-full transition-all duration-300 hover:scale-110 hover:text-primary"
+                        >
+                          <Github className="h-4 w-4" />
+                        </Link>
+                      )}
+                      {member.social.email && (
+                        <Link
+                          href={`mailto:${member.social.email}`}
+                          className="bg-primary/10 hover:bg-primary/20 p-2 rounded-full transition-all duration-300 hover:scale-110 hover:text-primary"
+                        >
+                          <Mail className="h-4 w-4" />
+                        </Link>
+                      )}
+                      {member.social.whatsapp && (
+                        <Link
+                          href={member.social.whatsapp}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-primary/10 hover:bg-primary/20 p-2 rounded-full transition-all duration-300 hover:scale-110 hover:text-primary"
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                        </Link>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               </AnimatedSection>

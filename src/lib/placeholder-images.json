@@ -2,117 +2,135 @@
   "placeholderImages": [
     {
       "id": "team-1",
-      "description": "Team member portrait 1",
-      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTg1ODUxMDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "description": "Yaseer K Adam - Founder & Developer",
+      "imageUrl": "/CEO.jpg",
+      "imageHint": "CEO portrait"
     },
     {
       "id": "team-2",
-      "description": "Team member portrait 2",
-      "imageUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTg1ODUxMDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "description": "Yusuf Abdullahi - Chief Operating Officer",
+      "imageUrl": "/COO.jpg",
+      "imageHint": "COO portrait"
     },
     {
       "id": "team-3",
-      "description": "Team member portrait 3",
-      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTg1ODUxMDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "description": "Ibrahim Hamza - Chief Technology Officer",
+      "imageUrl": "/CTO.jpg",
+      "imageHint": "CTO portrait"
     },
     {
       "id": "team-4",
-      "description": "Team member portrait 4",
-      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTg1ODUxMDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "description": "Abbas Aliyu - Chief Finance Officer",
+      "imageUrl": "/CFO.jpg",
+      "imageHint": "CFO portrait"
     },
     {
       "id": "project-1",
       "description": "Project screenshot 1",
-      "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0ZWNobm9sb2d5JTIwYWJzdHJhY3R8ZW58MHx8fHwxNzU4NTkyNDAzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "technology abstract"
+      "imageUrl": "/Next.js.png",
+      "imageHint": "nextjs project"
     },
     {
       "id": "project-2",
       "description": "Project screenshot 2",
-      "imageUrl": "https://images.unsplash.com/photo-1512364615838-8088a04a778b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmdXR1cmlzdGljJTIwY2l0eXxlbnwwfHx8fDE3NTg1ODU3OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "futuristic city"
+      "imageUrl": "/React.png",
+      "imageHint": "react project"
     },
     {
       "id": "project-3",
       "description": "Project screenshot 3",
-      "imageUrl": "https://images.unsplash.com/photo-1506399309177-3b43e99fead2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxuZXR3b3JrJTIwZGF0YXxlbnwwfHx8fDE3NTg2MDAwMDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "network data"
+      "imageUrl": "/Node.js.png",
+      "imageHint": "nodejs project"
     },
     {
       "id": "project-4",
       "description": "Project screenshot 4",
-      "imageUrl": "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWklMjByb2JvdHxlbnwwfHx8fDE3NTg2MTg0NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "ai robot"
+      "imageUrl": "/Firebase.png",
+      "imageHint": "firebase project"
     },
     {
       "id": "testimonial-1",
-      "description": "Avatar for testimonial 1",
-      "imageUrl": "https://images.unsplash.com/photo-1630910561339-4e22c7150093?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzU4Njk4MjY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person avatar"
+      "description": "Yaseer K Adam - Founder & Developer",
+      "imageUrl": "/CEO.jpg",
+      "imageHint": "client avatar"
     },
     {
       "id": "testimonial-2",
-      "description": "Avatar for testimonial 2",
-      "imageUrl": "https://images.unsplash.com/photo-1641288883869-c463bc6c2a58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzU4Njk4MjY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person avatar"
+      "description": "Yusuf Abdullahi - Chief Operating Officer",
+      "imageUrl": "/COO.jpg",
+      "imageHint": "client avatar"
     },
     {
       "id": "testimonial-3",
-      "description": "Avatar for testimonial 3",
-      "imageUrl": "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzU4Njk4MjY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person avatar"
+      "description": "Ibrahim Hamza - Chief Technology Officer",
+      "imageUrl": "/CTO.jpg",
+      "imageHint": "client avatar"
     },
     {
       "id": "tech-nextjs",
       "description": "Next.js logo",
-      "imageUrl": "/tech/nextjs.png",
+      "imageUrl": "/Next.js.png",
       "imageHint": "nextjs logo"
     },
     {
       "id": "tech-react",
       "description": "React logo",
-      "imageUrl": "/tech/react.png",
+      "imageUrl": "/React.png",
       "imageHint": "react logo"
     },
     {
       "id": "tech-tailwind",
       "description": "Tailwind CSS logo",
-      "imageUrl": "/tech/tailwind.png",
+      "imageUrl": "/Tailwind CSS.png",
       "imageHint": "tailwind logo"
     },
     {
       "id": "tech-firebase",
       "description": "Firebase logo",
-      "imageUrl": "/tech/firebase.png",
+      "imageUrl": "/Firebase.png",
       "imageHint": "firebase logo"
     },
     {
       "id": "tech-nodejs",
       "description": "Node.js logo",
-      "imageUrl": "/tech/nodejs.png",
+      "imageUrl": "/Node.js.png",
       "imageHint": "nodejs logo"
     },
     {
-      "id": "tech-typescript",
-      "description": "TypeScript logo",
-      "imageUrl": "/tech/typescript.png",
-      "imageHint": "typescript logo"
+      "id": "tech-mysql",
+      "description": "MySQL logo",
+      "imageUrl": "/MySQL.png",
+      "imageHint": "mysql logo"
+    },
+    {
+      "id": "tech-postgres",
+      "description": "PostgreSQL logo",
+      "imageUrl": "/PostgresSQL.png",
+      "imageHint": "postgresql logo"
     },
     {
       "id": "tech-docker",
       "description": "Docker logo",
-      "imageUrl": "/tech/docker.png",
+      "imageUrl": "/Docker.png",
       "imageHint": "docker logo"
     },
     {
       "id": "tech-cloud",
-      "description": "Cloud logo",
-      "imageUrl": "/tech/cloud.png",
-      "imageHint": "cloud logo"
+      "description": "Google Cloud logo",
+      "imageUrl": "/Google Cloud.png",
+      "imageHint": "google cloud logo"
+    },
+    {
+      "id": "vision",
+      "description": "FrontalMinds envisions a future where Africa stands at the forefront of global technological innovation. We aspire to be the leading force driving the continent's transition into the digital age by providing world-class AI, machine learning, and web development solutions. Our vision is to create an interconnected ecosystem where businesses, schools, and individuals can leverage cutting-edge technology to unlock limitless potential. By blending creativity, data-driven intelligence, and human-centered design, FrontalMinds seeks to empower a new generation of creators, entrepreneurs, and institutions to thrive in an increasingly digital and AI-driven world.",
+      "imageUrl": "/CEO.jpg",
+      "imageHint": "company vision"
+    },
+    {
+      "id": "mission",
+      "description": "Our mission at FrontalMinds is to revolutionize the way Africa approaches technology. We are committed to designing, developing, and delivering intelligent digital solutions that seamlessly integrate artificial intelligence, modern web architecture, and immersive user experiences. Through innovation, research, and collaboration, we strive to break barriers and provide scalable, affordable, and sustainable technologies that transform businesses, streamline education, and uplift communities. By fostering partnerships, nurturing talent, and maintaining a relentless focus on quality and impact, FrontalMinds aims to become a trusted partner in driving digital transformation across industries — inspiring progress, creativity, and long-term growth.",
+      "imageUrl": "/CTO.jpg",
+      "imageHint": "company mission"
     }
   ]
 }
